@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu, Phone, X } from "lucide-react";
+import { Facebook, Instagram, Menu, Phone, X } from "lucide-react";
 import { SITE } from "@/lib/site";
 
 const nav = [
@@ -14,35 +14,56 @@ export function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 px-4 pt-4">
-      <div className="container-page flex items-center justify-between gap-3 rounded-full border border-border bg-card/90 px-4 py-2.5 backdrop-blur-md sm:px-5">
-        <Link to="/" className="flex items-baseline gap-2">
-          <span className="font-display text-lg font-bold tracking-tight sm:text-xl">
-            Woodcrest<span className="text-primary">.</span>
+    <header className="pointer-events-none absolute inset-x-0 top-0 z-50 px-4 pt-4">
+      <div className="container-page flex items-start justify-between gap-3">
+        {/* Logo pill */}
+        <Link
+          to="/"
+          className="pointer-events-auto rounded-[1.75rem] bg-card px-5 py-3 shadow-sm"
+        >
+          <span className="block text-[11px] font-medium leading-none text-primary">
+            Buffalo · New York
           </span>
-          <span className="hidden text-[11px] font-medium text-muted-foreground sm:inline">
-            Tree Buffalo
+          <span className="mt-1 block font-display text-2xl font-bold leading-none tracking-tight sm:text-3xl">
+            Woodcrest<span className="text-primary">.</span>
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex">
+        {/* Nav pill */}
+        <nav className="pointer-events-auto hidden items-center gap-1 rounded-full bg-card/85 px-2 py-2 shadow-sm backdrop-blur-md md:flex">
           {nav.map((item) => (
             <Link
               key={item.to}
               to={item.to}
               activeOptions={{ exact: item.to === "/" }}
               activeProps={{ className: "bg-secondary text-foreground" }}
-              className="rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+              className="rounded-full px-4 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-secondary hover:text-foreground"
             >
               {item.label}
             </Link>
           ))}
+          <span className="mx-1 h-6 w-px bg-border" />
+          <a
+            href="https://facebook.com"
+            aria-label="Facebook"
+            className="inline-flex size-9 items-center justify-center rounded-full text-foreground/70 transition-colors hover:bg-secondary hover:text-foreground"
+          >
+            <Facebook className="size-4" />
+          </a>
+          <a
+            href="https://instagram.com"
+            aria-label="Instagram"
+            className="inline-flex size-9 items-center justify-center rounded-full text-foreground/70 transition-colors hover:bg-secondary hover:text-foreground"
+          >
+            <Instagram className="size-4" />
+          </a>
         </nav>
 
-        <div className="flex items-center gap-2">
+        {/* Right actions */}
+        <div className="pointer-events-auto flex items-center gap-2">
           <a
             href={SITE.phoneHref}
-            className="hidden items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90 sm:inline-flex"
+            className="hidden items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-opacity hover:opacity-90 lg:inline-flex"
           >
             <Phone className="size-4" />
             {SITE.phone}
@@ -51,7 +72,7 @@ export function Header() {
             type="button"
             aria-label={open ? "Close menu" : "Open menu"}
             onClick={() => setOpen((v) => !v)}
-            className="inline-flex size-10 items-center justify-center rounded-full border border-border md:hidden"
+            className="inline-flex size-12 items-center justify-center rounded-full bg-card shadow-sm md:hidden"
           >
             {open ? <X className="size-5" /> : <Menu className="size-5" />}
           </button>
@@ -59,7 +80,7 @@ export function Header() {
       </div>
 
       {open && (
-        <div className="container-page mt-2 rounded-3xl border border-border bg-card p-3 md:hidden">
+        <div className="container-page pointer-events-auto mt-2 rounded-[1.75rem] bg-card p-3 shadow-sm md:hidden">
           {nav.map((item) => (
             <Link
               key={item.to}
