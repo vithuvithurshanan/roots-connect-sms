@@ -1,6 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Leaf, Phone, ShieldCheck, Clock, Star } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
+import { Reveal } from "@/components/site/Reveal";
+import { Counter } from "@/components/site/Counter";
+import { Marquee } from "@/components/site/Marquee";
 import { SERVICES } from "@/lib/services";
 import { SITE } from "@/lib/site";
 import hero from "@/assets/hero-canopy.jpg";
