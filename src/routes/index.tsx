@@ -257,8 +257,12 @@ function Home() {
                 name: "Priya S.",
                 area: "Elmwood Village",
               },
-            ].map((r) => (
-              <blockquote key={r.name} className="rounded-[2rem] border border-border bg-card p-7">
+            ].map((r, i) => (
+              <Reveal
+                key={r.name}
+                delay={i * 130}
+                className="hover-lift rounded-[2rem] border border-border bg-card p-7"
+              >
                 <div className="flex gap-1 text-primary">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star key={i} className="size-4 fill-current" />
@@ -268,8 +272,9 @@ function Home() {
                 <footer className="mt-5 text-sm font-semibold">
                   {r.name} · <span className="text-muted-foreground">{r.area}</span>
                 </footer>
-              </blockquote>
+              </Reveal>
             ))}
+
           </div>
         </div>
       </section>
