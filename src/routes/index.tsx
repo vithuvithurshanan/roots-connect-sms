@@ -109,18 +109,33 @@ function Home() {
         </div>
       </section>
 
+      {/* Marquee */}
+      <div className="mt-16 sm:mt-24">
+        <Marquee
+          items={["Tree Removal", "Crown Pruning", "Stump Grinding", "24/7 Storm Response"]}
+        />
+      </div>
+
       {/* Stats */}
       <section className="px-4 py-16 sm:py-24">
         <div className="container-page">
-          <h2 className="display-lg max-w-3xl">
-            Fully licensed, fully insured, and genuinely careful with your yard.
-          </h2>
+          <Reveal>
+            <h2 className="display-lg max-w-3xl">
+              Fully licensed, fully insured, and genuinely careful with your yard.
+            </h2>
+          </Reveal>
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {stats.map((s) => (
-              <div key={s.label} className="rounded-[2rem] border border-border bg-card p-7">
-                <p className="font-display text-4xl font-bold text-primary">{s.value}</p>
+            {stats.map((s, i) => (
+              <Reveal
+                key={s.label}
+                delay={i * 120}
+                className="hover-lift rounded-[2rem] border border-border bg-card p-7"
+              >
+                <p className="font-display text-4xl font-bold text-primary">
+                  <Counter value={s.value} />
+                </p>
                 <p className="mt-2 text-sm text-muted-foreground">{s.label}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -129,33 +144,38 @@ function Home() {
       {/* Services */}
       <section className="px-4 pb-16 sm:pb-24">
         <div className="container-page">
-          <div className="flex flex-wrap items-end justify-between gap-4">
+          <Reveal className="flex flex-wrap items-end justify-between gap-4">
             <div>
               <p className="eyebrow">Our services</p>
               <h2 className="display-lg mt-3 max-w-2xl">Everything a tree needs, in one crew</h2>
             </div>
             <Link
               to="/services"
-              className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-3 text-sm font-semibold"
+              className="group inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-3 text-sm font-semibold transition-colors hover:bg-foreground hover:text-background"
             >
-              All services <ArrowRight className="size-4" />
+              All services{" "}
+              <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
-          </div>
+          </Reveal>
 
           <div className="mt-10 grid gap-4 md:grid-cols-2">
-            {SERVICES.map((s) => (
-              <article
+            {SERVICES.map((s, i) => (
+              <Reveal
+                as="article"
                 key={s.slug}
-                className="group overflow-hidden rounded-[2.5rem] border border-border bg-card"
+                delay={(i % 2) * 140}
+                className="hover-lift group overflow-hidden rounded-[2.5rem] border border-border bg-card"
               >
-                <img
-                  src={s.image}
-                  alt={s.alt}
-                  loading="lazy"
-                  width={900}
-                  height={900}
-                  className="h-64 w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                />
+                <div className="overflow-hidden">
+                  <img
+                    src={s.image}
+                    alt={s.alt}
+                    loading="lazy"
+                    width={900}
+                    height={900}
+                    className="h-64 w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110"
+                  />
+                </div>
                 <div className="p-7">
                   <h3 className="font-display text-2xl font-bold">{s.title}</h3>
                   <p className="mt-3 text-sm text-muted-foreground">{s.blurb}</p>
@@ -167,11 +187,12 @@ function Home() {
                     ))}
                   </ul>
                 </div>
-              </article>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
+
 
       {/* Why us */}
       <section className="px-4 pb-16 sm:pb-24">
