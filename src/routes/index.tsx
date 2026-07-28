@@ -43,24 +43,29 @@ function Home() {
       {/* Hero */}
       <section className="px-4 pt-4">
         <div className="container-page grid gap-4 lg:grid-cols-[1.55fr_1fr]">
-          <div className="relative overflow-hidden rounded-[2.5rem]">
+          <Reveal from="zoom" className="relative overflow-hidden rounded-[2.5rem]">
             <img
               src={hero}
               alt="Sunlight through a green oak canopy in Buffalo"
               width={1408}
               height={1200}
-              className="h-[420px] w-full object-cover sm:h-[560px] lg:h-[660px]"
+              className="h-[420px] w-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-105 sm:h-[560px] lg:h-[660px]"
             />
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-6 sm:p-10">
-              <h1 className="display-xl max-w-3xl text-background">
-                Buffalo's trees, in the right hands
-              </h1>
-              <p className="mt-4 max-w-xl text-sm text-background/85 sm:text-base">
-                Removal, pruning, stump grinding and storm cleanup from a crew that treats your
-                property like its own.
-              </p>
+              <Reveal delay={200}>
+                <h1 className="display-xl max-w-3xl text-background">
+                  Buffalo's trees, in the right hands
+                </h1>
+              </Reveal>
+              <Reveal delay={350}>
+                <p className="mt-4 max-w-xl text-sm text-background/85 sm:text-base">
+                  Removal, pruning, stump grinding and storm cleanup from a crew that treats your
+                  property like its own.
+                </p>
+              </Reveal>
             </div>
-          </div>
+          </Reveal>
+
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
             <div className="flex flex-col justify-between rounded-[2.5rem] bg-lime p-7 text-lime-foreground">
