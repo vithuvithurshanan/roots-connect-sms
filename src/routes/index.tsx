@@ -196,7 +196,10 @@ function Home() {
 
       {/* Why us */}
       <section className="px-4 pb-16 sm:pb-24">
-        <div className="container-page rounded-[2.5rem] bg-bark p-8 text-bark-foreground sm:p-14">
+        <Reveal
+          from="zoom"
+          className="container-page rounded-[2.5rem] bg-bark p-8 text-bark-foreground sm:p-14"
+        >
           <p className="eyebrow text-bark-foreground/70">Why Woodcrest</p>
           <h2 className="display-lg mt-3 max-w-3xl">
             No guesswork, no surprise invoices, no wrecked lawns.
@@ -218,15 +221,16 @@ function Home() {
                 title: "Spotless finish",
                 text: "Chips hauled, logs stacked where you want them, and the site raked clean.",
               },
-            ].map((f) => (
-              <div key={f.title}>
-                <f.icon className="size-6 text-lime" />
+            ].map((f, i) => (
+              <Reveal key={f.title} delay={i * 140} className="group">
+                <f.icon className="size-6 text-lime transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-110" />
                 <h3 className="mt-4 text-xl font-bold">{f.title}</h3>
                 <p className="mt-2 text-sm opacity-80">{f.text}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
-        </div>
+        </Reveal>
+
       </section>
 
       {/* Reviews */}
