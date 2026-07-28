@@ -77,23 +77,52 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Woodcrest Tree Buffalo | Tree Service in Buffalo, NY" },
+      {
+        name: "description",
+        content:
+          "Licensed, insured tree removal, trimming, stump grinding and 24/7 storm response in Buffalo, NY. Free estimates — call 716-333-8772.",
+      },
+      { name: "author", content: "Woodcrest Tree Buffalo" },
+      { property: "og:site_name", content: "Woodcrest Tree Buffalo" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Sans:wght@400;500;600&display=swap",
+      },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          name: "Woodcrest Tree Buffalo",
+          telephone: "716-333-8772",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "380 Walnut St",
+            addressLocality: "Buffalo",
+            addressRegion: "NY",
+            postalCode: "14204",
+            addressCountry: "US",
+          },
+          areaServed: "Buffalo, New York",
+        }),
+      },
+    ],
   }),
+
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
