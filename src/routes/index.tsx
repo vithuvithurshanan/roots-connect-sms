@@ -66,9 +66,12 @@ function Home() {
             </div>
           </Reveal>
 
-
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
-            <div className="flex flex-col justify-between rounded-[2.5rem] bg-lime p-7 text-lime-foreground">
+            <Reveal
+              from="right"
+              delay={150}
+              className="hover-lift flex flex-col justify-between rounded-[2.5rem] bg-lime p-7 text-lime-foreground"
+            >
               <div>
                 <p className="eyebrow text-lime-foreground/70">Free estimate</p>
                 <p className="mt-3 font-display text-2xl font-bold leading-tight">
@@ -77,25 +80,32 @@ function Home() {
               </div>
               <a
                 href={SITE.phoneHref}
-                className="mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-foreground px-5 py-3 text-sm font-semibold text-background"
+                className="group mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-foreground px-5 py-3 text-sm font-semibold text-background transition-transform duration-300 hover:scale-[1.04]"
               >
-                <Phone className="size-4" /> {SITE.phone}
+                <Phone className="size-4 transition-transform duration-500 group-hover:rotate-12" />{" "}
+                {SITE.phone}
               </a>
-            </div>
+            </Reveal>
 
-            <div className="rounded-[2.5rem] bg-sand p-7 text-sand-foreground">
+            <Reveal
+              from="right"
+              delay={300}
+              className="hover-lift rounded-[2.5rem] bg-sand p-7 text-sand-foreground"
+            >
               <p className="eyebrow text-sand-foreground/70">Where we work</p>
               <p className="mt-3 font-display text-2xl font-bold leading-tight">{SITE.city}, NY</p>
               <p className="mt-2 text-sm opacity-80">{SITE.addressLine}</p>
               <p className="mt-4 text-sm opacity-80">{SITE.hours}</p>
               <Link
                 to="/contact"
-                className="mt-5 inline-flex items-center gap-2 text-sm font-semibold underline underline-offset-4"
+                className="group mt-5 inline-flex items-center gap-2 text-sm font-semibold underline underline-offset-4"
               >
-                Request a quote <ArrowRight className="size-4" />
+                Request a quote{" "}
+                <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
-            </div>
+            </Reveal>
           </div>
+
         </div>
       </section>
 
