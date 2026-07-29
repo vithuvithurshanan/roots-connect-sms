@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-type RevealProps = {
+type RevealProps = React.HTMLAttributes<HTMLElement> & {
   children: ReactNode;
   className?: string;
   delay?: number;
@@ -24,6 +24,7 @@ export function Reveal({
   delay = 0,
   from = "up",
   as: Tag = "div",
+  ...props
 }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState(false);
@@ -59,6 +60,7 @@ export function Reveal({
         shown ? "translate-x-0 translate-y-0 scale-100 opacity-100 blur-0" : `opacity-0 blur-[2px] ${hiddenMap[from]}`,
         className,
       )}
+      {...props}
     >
       {children}
     </Tag>

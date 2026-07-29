@@ -1,13 +1,8 @@
-import removal from "@/assets/service-removal.jpg";
-import trimming from "@/assets/service-trimming.jpg";
-import stump from "@/assets/service-stump.jpg";
-import emergency from "@/assets/service-emergency.jpg";
-
 export const SERVICES = [
   {
     slug: "tree-removal",
     title: "Tree Removal",
-    image: removal,
+    image: "https://res.cloudinary.com/vbblslix/image/upload/v1785340406/service-removal_m2ackg.jpg",
     alt: "Certified arborist roped into a large tree performing a sectional removal",
     blurb:
       "Safe, rigged sectional removals for tight Buffalo lots — no damage to fences, roofs or gardens.",
@@ -16,7 +11,7 @@ export const SERVICES = [
   {
     slug: "trimming-pruning",
     title: "Trimming & Pruning",
-    image: trimming,
+    image: "https://res.cloudinary.com/vbblslix/image/upload/v1785340404/service-trimming_g6rzxy.jpg",
     alt: "Close-up of pruning shears trimming a leafy branch in sunlight",
     blurb:
       "Structural pruning that keeps canopies healthy, opens light and clears roofs and power lines.",
@@ -25,7 +20,7 @@ export const SERVICES = [
   {
     slug: "stump-grinding",
     title: "Stump Grinding",
-    image: stump,
+    image: "https://res.cloudinary.com/vbblslix/image/upload/v1785340403/service-stump_wfonir.jpg",
     alt: "Stump grinder removing a tree stump from a green lawn",
     blurb: "Stumps ground below grade, roots chased, and the lawn left ready to seed or replant.",
     points: ["Grinding 6–12in below grade", "Surface root removal", "Backfill & clean finish"],
@@ -33,7 +28,7 @@ export const SERVICES = [
   {
     slug: "emergency-storm",
     title: "Emergency Storm Work",
-    image: emergency,
+    image: "https://res.cloudinary.com/vbblslix/image/upload/v1785340403/service-emergency_q8z1uv.jpg",
     alt: "Storm-damaged tree fallen across a residential street",
     blurb:
       "Lake-effect storms don't wait. Our crew is on call 24/7 for fallen limbs and split trunks.",

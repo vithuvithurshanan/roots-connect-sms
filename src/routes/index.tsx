@@ -1,12 +1,19 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Leaf, Phone, ShieldCheck, Clock, Star } from "lucide-react";
+import { ArrowRight, Leaf, Phone, ShieldCheck, Clock, Star, TreePine, Zap } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Reveal } from "@/components/site/Reveal";
 import { Counter } from "@/components/site/Counter";
 import { Marquee } from "@/components/site/Marquee";
 import { SERVICES } from "@/lib/services";
 import { SITE } from "@/lib/site";
-import hero from "@/assets/hero-canopy.jpg";
+const hero = "https://res.cloudinary.com/vbblslix/image/upload/v1785340402/hero-canopy_wnewi5.jpg";
+import { BattalionParallaxImage } from "@/components/battalion/BattalionParallaxImage";
+import { BattalionScrollCards } from "@/components/battalion/BattalionScrollCards";
+import { BattalionTextReveal } from "@/components/battalion/BattalionTextReveal";
+import { BattalionFloatingLeaves } from "@/components/battalion/BattalionFloatingLeaves";
+import { CoLabsInvertedCorner } from "@/components/colabs/CoLabsInvertedCorner";
+import { CoLabsPill } from "@/components/colabs/CoLabsPill";
+import { CoLabsButton } from "@/components/colabs/CoLabsButton";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -31,77 +38,126 @@ export const Route = createFileRoute("/")({
 });
 
 const stats = [
-  { value: "18+", label: "Years climbing WNY trees" },
-  { value: "4,200", label: "Trees safely serviced" },
+  { value: "18+", label: "Years of experience" },
+  { value: "4,200", label: "Trees serviced" },
   { value: "24/7", label: "Storm response" },
-  { value: "5.0", label: "Average review rating" },
+  { value: "5.0", label: "Review rating" },
 ];
 
 function Home() {
   return (
     <SiteLayout>
-      {/* Hero */}
-      <section className="px-4 pt-4">
-        <div className="container-page grid gap-4 lg:grid-cols-[1.55fr_1fr]">
-          <Reveal from="zoom" className="relative overflow-hidden rounded-[2.5rem]">
+
+      {/* ── HERO BENTO GRID ── */}
+      <section className="px-4 pt-24 pb-6 sm:pt-28 sm:pb-8">
+        <div className="container-page grid gap-3 lg:grid-cols-[1.6fr_1fr] lg:grid-rows-[auto_auto]">
+
+          {/* Main image card — left, spans 2 rows on lg */}
+          <Reveal
+            from="left"
+            data-leaf-roof="true"
+            className="relative overflow-hidden rounded-[2.5rem] lg:row-span-2 min-h-[520px]"
+          >
             <img
               src={hero}
-              alt="Sunlight through a green oak canopy in Buffalo"
+              alt="Sunlight through green tree canopy in Buffalo NY"
               width={1408}
               height={1200}
-              className="h-[420px] w-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-105 sm:h-[560px] lg:h-[660px]"
+              className="absolute inset-0 h-full w-full object-cover"
             />
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-6 sm:p-10">
-              <Reveal delay={200}>
-                <h1 className="display-xl max-w-3xl text-background">
-                  Buffalo's trees, in the right hands
-                </h1>
-              </Reveal>
-              <Reveal delay={350}>
-                <p className="mt-4 max-w-xl text-sm text-background/85 sm:text-base">
-                  Removal, pruning, stump grinding and storm cleanup from a crew that treats your
-                  property like its own.
-                </p>
-              </Reveal>
+            {/* gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+
+            {/* text */}
+            <div className="absolute inset-x-0 bottom-0 p-8 sm:p-10">
+              <CoLabsPill variant="lime" className="mb-2">
+                Buffalo · New York
+              </CoLabsPill>
+              <h1 className="display-xl mt-3 max-w-xl text-white leading-[1.1]">
+                Buffalo's trees, in the right hands
+              </h1>
+              <p className="mt-3 max-w-md text-sm text-white/75">
+                Removal, pruning, stump grinding and storm cleanup from a crew that treats your
+                property like its own.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <CoLabsButton href={SITE.phoneHref} variant="lime">
+                  <Phone className="size-4 inline mr-1" /> {SITE.phone}
+                </CoLabsButton>
+                <CoLabsButton href="/services" variant="outline">
+                  Our services
+                </CoLabsButton>
+              </div>
             </div>
           </Reveal>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+          {/* Top-right — free estimate card */}
+          <Reveal
+            from="right"
+            delay={100}
+            data-leaf-roof="true"
+            className="group relative flex flex-col justify-between rounded-[2.5rem] bg-lime p-7 text-lime-foreground overflow-hidden"
+          >
+            <CoLabsInvertedCorner position="bottom-right" fill="#0c140d" className="opacity-25" />
+            <div>
+              <CoLabsPill variant="dark" className="text-white">
+                Free estimate
+              </CoLabsPill>
+              <p className="mt-4 font-display text-2xl font-bold leading-snug">
+                Got a tree that worries you? We'll look at it today.
+              </p>
+            </div>
+            <CoLabsButton href={SITE.phoneHref} variant="dark" className="mt-6 w-fit">
+              Call now
+            </CoLabsButton>
+          </Reveal>
+
+          {/* Bottom-right — 2-col mini grid */}
+          <div className="grid grid-cols-2 gap-3">
+            {/* stat */}
             <Reveal
-              from="right"
-              delay={150}
-              className="hover-lift flex flex-col justify-between rounded-[2.5rem] bg-lime p-7 text-lime-foreground"
+              delay={160}
+              data-leaf-roof="true"
+              className="relative overflow-hidden flex flex-col justify-between rounded-[2rem] bg-primary p-6 text-primary-foreground"
             >
+              <CoLabsInvertedCorner position="top-right" fill="currentColor" className="opacity-15" />
+              <TreePine className="size-7 opacity-60" />
               <div>
-                <p className="eyebrow text-lime-foreground/70">Free estimate</p>
-                <p className="mt-3 font-display text-2xl font-bold leading-tight">
-                  Got a tree that worries you? We'll look at it today.
-                </p>
+                <p className="font-display text-4xl font-bold">4,200+</p>
+                <p className="mt-1 text-xs opacity-70">Trees safely serviced</p>
               </div>
-              <a
-                href={SITE.phoneHref}
-                className="group mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-foreground px-5 py-3 text-sm font-semibold text-background transition-transform duration-300 hover:scale-[1.04]"
-              >
-                <Phone className="size-4 transition-transform duration-500 group-hover:rotate-12" />{" "}
-                {SITE.phone}
-              </a>
             </Reveal>
 
+            {/* storm card */}
             <Reveal
-              from="right"
-              delay={300}
-              className="hover-lift rounded-[2.5rem] bg-sand p-7 text-sand-foreground"
+              delay={220}
+              data-leaf-roof="true"
+              className="relative overflow-hidden flex flex-col justify-between rounded-[2rem] bg-bark p-6 text-bark-foreground"
             >
-              <p className="eyebrow text-sand-foreground/70">Where we work</p>
-              <p className="mt-3 font-display text-2xl font-bold leading-tight">{SITE.city}, NY</p>
-              <p className="mt-2 text-sm opacity-80">{SITE.addressLine}</p>
-              <p className="mt-4 text-sm opacity-80">{SITE.hours}</p>
+              <CoLabsInvertedCorner position="top-right" fill="currentColor" className="opacity-15" />
+              <Zap className="size-7 opacity-60" />
+              <div>
+                <p className="font-display text-2xl font-bold">24/7</p>
+                <p className="mt-1 text-xs opacity-70">Storm response</p>
+              </div>
+            </Reveal>
+
+            {/* where we work — spans 2 cols */}
+            <Reveal
+              delay={280}
+              data-leaf-roof="true"
+              className="relative overflow-hidden col-span-2 rounded-[2rem] bg-sand p-6 text-sand-foreground"
+            >
+              <CoLabsPill variant="outline">
+                Where we work
+              </CoLabsPill>
+              <p className="mt-3 font-display text-xl font-bold">{SITE.city}, NY</p>
+              <p className="mt-1 text-xs opacity-70">{SITE.hours}</p>
               <Link
                 to="/contact"
-                className="group mt-5 inline-flex items-center gap-2 text-sm font-semibold underline underline-offset-4"
+                className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold underline underline-offset-4"
               >
-                Request a quote{" "}
-                <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
+                Request a quote <ArrowRight className="size-3" />
               </Link>
             </Reveal>
           </div>
@@ -109,15 +165,15 @@ function Home() {
         </div>
       </section>
 
-      {/* Marquee */}
-      <div className="mt-16 sm:mt-24">
+      {/* ── MARQUEE ── */}
+      <div className="mt-10 sm:mt-14">
         <Marquee
           items={["Tree Removal", "Crown Pruning", "Stump Grinding", "24/7 Storm Response"]}
         />
       </div>
 
-      {/* Stats */}
-      <section className="px-4 py-16 sm:py-24">
+      {/* ── STATS ROW ── */}
+      <section className="px-4 py-14 sm:py-20">
         <div className="container-page">
           <Reveal>
             <h2 className="display-lg max-w-3xl">
@@ -128,7 +184,8 @@ function Home() {
             {stats.map((s, i) => (
               <Reveal
                 key={s.label}
-                delay={i * 120}
+                delay={i * 100}
+                data-leaf-roof="true"
                 className="hover-lift rounded-[2rem] border border-border bg-card p-7"
               >
                 <p className="font-display text-4xl font-bold text-primary">
@@ -141,21 +198,20 @@ function Home() {
         </div>
       </section>
 
-      {/* Services */}
-      <section className="px-4 pb-16 sm:pb-24">
+      {/* ── HORIZONTAL SCROLL FEATURES ── */}
+      <BattalionScrollCards />
+
+      {/* ── SERVICES BENTO ── */}
+      <section className="px-4 py-16 sm:py-24">
         <div className="container-page">
           <Reveal className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="eyebrow">Our services</p>
+              <CoLabsPill variant="outline">Our services</CoLabsPill>
               <h2 className="display-lg mt-3 max-w-2xl">Everything a tree needs, in one crew</h2>
             </div>
-            <Link
-              to="/services"
-              className="group inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-3 text-sm font-semibold transition-colors hover:bg-foreground hover:text-background"
-            >
-              All services{" "}
-              <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </Link>
+            <CoLabsButton href="/services" variant="outline">
+              All services
+            </CoLabsButton>
           </Reveal>
 
           <div className="mt-10 grid gap-4 md:grid-cols-2">
@@ -163,19 +219,18 @@ function Home() {
               <Reveal
                 as="article"
                 key={s.slug}
-                delay={(i % 2) * 140}
-                className="hover-lift group overflow-hidden rounded-[2.5rem] border border-border bg-card"
+                delay={(i % 2) * 120}
+                data-leaf-roof="true"
+                className="hover-lift group relative overflow-hidden rounded-[2.5rem] border border-border bg-card"
               >
-                <div className="overflow-hidden">
-                  <img
-                    src={s.image}
-                    alt={s.alt}
-                    loading="lazy"
-                    width={900}
-                    height={900}
-                    className="h-64 w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110"
-                  />
-                </div>
+                <CoLabsInvertedCorner position="bottom-right" fill="currentColor" className="opacity-15" />
+                <BattalionParallaxImage
+                  src={s.image}
+                  alt={s.alt}
+                  width={900}
+                  height={900}
+                  className="h-64 w-full"
+                />
                 <div className="p-7">
                   <h3 className="font-display text-2xl font-bold">{s.title}</h3>
                   <p className="mt-3 text-sm text-muted-foreground">{s.blurb}</p>
@@ -193,14 +248,14 @@ function Home() {
         </div>
       </section>
 
-
-      {/* Why us */}
+      {/* ── WHY US ── */}
       <section className="px-4 pb-16 sm:pb-24">
         <Reveal
           from="zoom"
-          className="container-page rounded-[2.5rem] bg-bark p-8 text-bark-foreground sm:p-14"
+          className="container-page relative overflow-hidden rounded-[2.5rem] bg-bark p-8 text-bark-foreground sm:p-14"
         >
-          <p className="eyebrow text-bark-foreground/70">Why Woodcrest</p>
+          <CoLabsInvertedCorner position="top-right" fill="currentColor" className="opacity-20" />
+          <CoLabsPill variant="lime" className="text-lime">Why Woodcrest</CoLabsPill>
           <h2 className="display-lg mt-3 max-w-3xl">
             No guesswork, no surprise invoices, no wrecked lawns.
           </h2>
@@ -230,13 +285,14 @@ function Home() {
             ))}
           </div>
         </Reveal>
-
       </section>
 
-      {/* Reviews */}
+      {/* ── REVIEWS ── */}
       <section className="px-4 pb-16 sm:pb-24">
         <div className="container-page">
-          <p className="eyebrow">Neighbors say</p>
+          <Reveal>
+            <CoLabsPill variant="outline">Neighbors say</CoLabsPill>
+          </Reveal>
           <div className="mt-8 grid gap-4 md:grid-cols-3">
             {[
               {
@@ -260,12 +316,14 @@ function Home() {
             ].map((r, i) => (
               <Reveal
                 key={r.name}
-                delay={i * 130}
-                className="hover-lift rounded-[2rem] border border-border bg-card p-7"
+                delay={i * 120}
+                data-leaf-roof="true"
+                className="hover-lift relative overflow-hidden rounded-[2rem] border border-border bg-card p-7"
               >
+                <CoLabsInvertedCorner position="bottom-right" fill="currentColor" className="opacity-15" />
                 <div className="flex gap-1 text-primary">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="size-4 fill-current" />
+                  {Array.from({ length: 5 }).map((_, j) => (
+                    <Star key={j} className="size-4 fill-current" />
                   ))}
                 </div>
                 <p className="mt-4 text-sm text-muted-foreground">"{r.quote}"</p>
@@ -274,10 +332,10 @@ function Home() {
                 </footer>
               </Reveal>
             ))}
-
           </div>
         </div>
       </section>
+
     </SiteLayout>
   );
 }

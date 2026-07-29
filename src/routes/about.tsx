@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { SITE } from "@/lib/site";
-import hero from "@/assets/hero-canopy.jpg";
+const hero = "https://res.cloudinary.com/vbblslix/image/upload/v1785340402/hero-canopy_wnewi5.jpg";
 
 export const Route = createFileRoute("/about")({
   component: About,
@@ -28,7 +28,7 @@ export const Route = createFileRoute("/about")({
 function About() {
   return (
     <SiteLayout>
-      <section className="px-4 pt-12 sm:pt-20">
+      <section className="px-4 pt-24 sm:pt-28">
         <div className="container-page">
           <p className="eyebrow">About us</p>
           <h1 className="display-xl mt-4 max-w-4xl">Buffalo born, canopy obsessed</h1>
