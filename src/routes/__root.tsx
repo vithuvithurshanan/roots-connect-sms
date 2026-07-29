@@ -110,7 +110,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@context": "https://schema.org",
           "@type": "LocalBusiness",
           name: "Woodcrest Tree Buffalo",
+          url: "https://woodcrest-tree-buffalo.web.app",
           telephone: "716-333-8772",
+          email: "info@woodcresttreebuffalo.com",
+          image: "https://res.cloudinary.com/vbblslix/image/upload/v1785338839/Create_creativity_logo_Woodcrest_202607291021-Photoroom_pkovw9.png",
+          priceRange: "$$",
           address: {
             "@type": "PostalAddress",
             streetAddress: "380 Walnut St",
@@ -119,7 +123,38 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
             postalCode: "14204",
             addressCountry: "US",
           },
-          areaServed: "Buffalo, New York",
+          geo: {
+            "@type": "GeoCoordinates",
+            latitude: 42.8864,
+            longitude: -78.8784,
+          },
+          areaServed: {
+            "@type": "City",
+            name: "Buffalo",
+            containedInPlace: {
+              "@type": "State",
+              name: "New York",
+            },
+          },
+          openingHoursSpecification: [
+            {
+              "@type": "OpeningHoursSpecification",
+              dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+              opens: "07:00",
+              closes: "19:00",
+            },
+          ],
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: "5.0",
+            reviewCount: "42",
+            bestRating: "5",
+            worstRating: "1",
+          },
+          sameAs: [
+            "https://www.facebook.com/profile.php?id=61577337558829",
+            "https://www.instagram.com/woodcresttreebuffalo",
+          ],
         }),
       },
     ],

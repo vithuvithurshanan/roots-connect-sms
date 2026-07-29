@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Phone, ArrowRight, Shield } from "lucide-react";
+import { Phone, ArrowRight } from "lucide-react";
 import { SITE } from "@/lib/site";
 
 const highlights = [

@@ -9,8 +9,6 @@ import { SITE } from "@/lib/site";
 const hero = "https://res.cloudinary.com/vbblslix/image/upload/v1785340402/hero-canopy_wnewi5.jpg";
 import { BattalionParallaxImage } from "@/components/battalion/BattalionParallaxImage";
 import { BattalionScrollCards } from "@/components/battalion/BattalionScrollCards";
-import { BattalionTextReveal } from "@/components/battalion/BattalionTextReveal";
-import { BattalionFloatingLeaves } from "@/components/battalion/BattalionFloatingLeaves";
 import { CoLabsInvertedCorner } from "@/components/colabs/CoLabsInvertedCorner";
 import { CoLabsPill } from "@/components/colabs/CoLabsPill";
 import { CoLabsButton } from "@/components/colabs/CoLabsButton";
