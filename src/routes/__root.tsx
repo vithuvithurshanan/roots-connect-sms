@@ -100,7 +100,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Sans:wght@400;500;600&display=swap",
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "https://res.cloudinary.com/vbblslix/image/upload/v1785338839/Create_creativity_logo_Woodcrest_202607291021-Photoroom_pkovw9.png", type: "image/png" },
+      { rel: "apple-touch-icon", href: "https://res.cloudinary.com/vbblslix/image/upload/v1785338839/Create_creativity_logo_Woodcrest_202607291021-Photoroom_pkovw9.png" },
     ],
     scripts: [
       {
