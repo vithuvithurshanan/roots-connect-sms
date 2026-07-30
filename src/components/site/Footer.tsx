@@ -15,7 +15,7 @@ export function Footer() {
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
             <img
-              src="https://res.cloudinary.com/vbblslix/image/upload/v1785338839/Create_creativity_logo_Woodcrest_202607291021-Photoroom_pkovw9.png"
+              src="https://res.cloudinary.com/vbblslix/image/upload/f_auto,q_auto,w_144,h_144,c_fit/v1785338839/Create_creativity_logo_Woodcrest_202607291021-Photoroom_pkovw9.png"
               alt="Woodcrest Tree Buffalo"
               className="h-12 w-auto brightness-0 invert"
             />

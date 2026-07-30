@@ -2,7 +2,7 @@ export const SERVICES = [
   {
     slug: "tree-removal",
     title: "Tree Removal",
-    image: "https://res.cloudinary.com/vbblslix/image/upload/v1785340406/service-removal_m2ackg.jpg",
+    image: "https://res.cloudinary.com/vbblslix/image/upload/f_auto,q_auto,w_640,h_640,c_fill,g_auto/v1785340406/service-removal_m2ackg.jpg",
     alt: "Certified arborist roped into a large tree performing a sectional removal",
     blurb:
       "Safe, rigged sectional removals for tight Buffalo lots — no damage to fences, roofs or gardens.",
@@ -11,7 +11,7 @@ export const SERVICES = [
   {
     slug: "trimming-pruning",
     title: "Trimming & Pruning",
-    image: "https://res.cloudinary.com/vbblslix/image/upload/v1785340404/service-trimming_g6rzxy.jpg",
+    image: "https://res.cloudinary.com/vbblslix/image/upload/f_auto,q_auto,w_640,h_640,c_fill,g_auto/v1785340404/service-trimming_g6rzxy.jpg",
     alt: "Close-up of pruning shears trimming a leafy branch in sunlight",
     blurb:
       "Structural pruning that keeps canopies healthy, opens light and clears roofs and power lines.",
@@ -20,7 +20,7 @@ export const SERVICES = [
   {
     slug: "stump-grinding",
     title: "Stump Grinding",
-    image: "https://res.cloudinary.com/vbblslix/image/upload/v1785340403/service-stump_wfonir.jpg",
+    image: "https://res.cloudinary.com/vbblslix/image/upload/f_auto,q_auto,w_640,h_640,c_fill,g_auto/v1785340403/service-stump_wfonir.jpg",
     alt: "Stump grinder removing a tree stump from a green lawn",
     blurb: "Stumps ground below grade, roots chased, and the lawn left ready to seed or replant.",
     points: ["Grinding 6–12in below grade", "Surface root removal", "Backfill & clean finish"],
@@ -28,7 +28,7 @@ export const SERVICES = [
   {
     slug: "emergency-storm",
     title: "Emergency Storm Work",
-    image: "https://res.cloudinary.com/vbblslix/image/upload/v1785340403/service-emergency_q8z1uv.jpg",
+    image: "https://res.cloudinary.com/vbblslix/image/upload/f_auto,q_auto,w_640,h_640,c_fill,g_auto/v1785340403/service-emergency_q8z1uv.jpg",
     alt: "Storm-damaged tree fallen across a residential street",
     blurb:
       "Lake-effect storms don't wait. Our crew is on call 24/7 for fallen limbs and split trunks.",

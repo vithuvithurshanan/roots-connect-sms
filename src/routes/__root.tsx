@@ -100,8 +100,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Sans:wght@400;500;600&display=swap",
       },
-      { rel: "icon", href: "https://res.cloudinary.com/vbblslix/image/upload/v1785338839/Create_creativity_logo_Woodcrest_202607291021-Photoroom_pkovw9.png", type: "image/png" },
-      { rel: "apple-touch-icon", href: "https://res.cloudinary.com/vbblslix/image/upload/v1785338839/Create_creativity_logo_Woodcrest_202607291021-Photoroom_pkovw9.png" },
+      { rel: "icon", href: "https://res.cloudinary.com/vbblslix/image/upload/q_auto,w_180,h_180,c_fit/v1785338839/Create_creativity_logo_Woodcrest_202607291021-Photoroom_pkovw9.png", type: "image/png" },
+      { rel: "apple-touch-icon", href: "https://res.cloudinary.com/vbblslix/image/upload/q_auto,w_180,h_180,c_fit/v1785338839/Create_creativity_logo_Woodcrest_202607291021-Photoroom_pkovw9.png" },
     ],
     scripts: [
       {
@@ -184,7 +184,15 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   useEffect(() => {
-    initAnalytics();
+    // Deferred so analytics' network round-trips don't compete with
+    // critical-path resources for bandwidth during initial page load.
+    const schedule =
+      window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 2000));
+    const handle = schedule(() => initAnalytics());
+    return () => {
+      if (window.cancelIdleCallback) window.cancelIdleCallback(handle as number);
+      else window.clearTimeout(handle as number);
+    };
   }, []);
 
   return (

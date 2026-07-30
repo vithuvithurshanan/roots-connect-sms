@@ -6,7 +6,7 @@ import { Counter } from "@/components/site/Counter";
 import { Marquee } from "@/components/site/Marquee";
 import { SERVICES } from "@/lib/services";
 import { SITE } from "@/lib/site";
-const hero = "https://res.cloudinary.com/vbblslix/image/upload/v1785340402/hero-canopy_wnewi5.jpg";
+const hero = "https://res.cloudinary.com/vbblslix/image/upload/f_auto,q_auto/v1785340402/hero-canopy_wnewi5.jpg";
 import { BattalionParallaxImage } from "@/components/battalion/BattalionParallaxImage";
 import { BattalionScrollCards } from "@/components/battalion/BattalionScrollCards";
 import { CoLabsInvertedCorner } from "@/components/colabs/CoLabsInvertedCorner";
@@ -50,9 +50,10 @@ function Home() {
       <section className="px-4 pt-24 pb-6 sm:pt-28 sm:pb-8">
         <div className="container-page grid gap-3 lg:grid-cols-[1.6fr_1fr] lg:grid-rows-[auto_auto]">
 
-          {/* Main image card — left, spans 2 rows on lg */}
-          <Reveal
-            from="left"
+          {/* Main image card — left, spans 2 rows on lg. Not wrapped in <Reveal>: it
+              holds the LCP image, and Reveal's opacity-0-until-observed fade-in would
+              delay when the browser considers it painted. */}
+          <div
             data-leaf-roof="true"
             className="relative overflow-hidden rounded-[2.5rem] lg:row-span-2 min-h-[520px]"
           >
@@ -61,6 +62,7 @@ function Home() {
               alt="Sunlight through green tree canopy in Buffalo NY"
               width={1408}
               height={1200}
+              fetchPriority="high"
               className="absolute inset-0 h-full w-full object-cover"
             />
             {/* gradient overlay */}
@@ -87,7 +89,7 @@ function Home() {
                 </CoLabsButton>
               </div>
             </div>
-          </Reveal>
+          </div>
 
           {/* Top-right — free estimate card */}
           <Reveal

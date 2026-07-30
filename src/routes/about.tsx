@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { SITE } from "@/lib/site";
-const hero = "https://res.cloudinary.com/vbblslix/image/upload/v1785340402/hero-canopy_wnewi5.jpg";
+const hero = "https://res.cloudinary.com/vbblslix/image/upload/f_auto,q_auto/v1785340402/hero-canopy_wnewi5.jpg";
 
 export const Route = createFileRoute("/about")({
   component: About,
