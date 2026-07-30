@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 type RevealProps = React.HTMLAttributes<HTMLElement> & {
@@ -29,10 +29,20 @@ export function Reveal({
   const ref = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setShown(true);
+      return;
+    }
+    // Content already inside the initial viewport should render immediately —
+    // animating it in on load (rather than on scroll) just delays paint for no
+    // visual benefit, and can hold up LCP if this happens to be the LCP element.
+    // useLayoutEffect (vs useEffect) applies this before the browser's first
+    // paint, so there's no flash of the hidden state either.
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
       setShown(true);
       return;
     }
