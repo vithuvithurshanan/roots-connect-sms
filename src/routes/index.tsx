@@ -4,8 +4,6 @@ import { ArrowRight, Leaf, Phone, ShieldCheck, Clock, Star, TreePine, Zap } from
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Reveal } from "@/components/site/Reveal";
 import { LazyMount } from "@/components/site/LazyMount";
-import { Counter } from "@/components/site/Counter";
-import { Marquee } from "@/components/site/Marquee";
 import { SERVICES } from "@/lib/services";
 import { SITE } from "@/lib/site";
 import { useDelayedMount } from "@/lib/useDelayedMount";
@@ -13,6 +11,16 @@ const hero = "https://res.cloudinary.com/vbblslix/image/upload/v1785426714/hero-
 import { CoLabsInvertedCorner } from "@/components/colabs/CoLabsInvertedCorner";
 import { CoLabsPill } from "@/components/colabs/CoLabsPill";
 import { CoLabsButton } from "@/components/colabs/CoLabsButton";
+
+// Below-the-fold: lazy-load so they're excluded from the initial bundle.
+// Counter and Marquee both pull in lucide-react icons; deferring them
+// keeps those bytes out of the critical path.
+const Counter = lazy(() =>
+  import("@/components/site/Counter").then((m) => ({ default: m.Counter })),
+);
+const Marquee = lazy(() =>
+  import("@/components/site/Marquee").then((m) => ({ default: m.Marquee })),
+);
 
 // Lazy-loaded and time-delayed: below-the-fold, framer-motion-heavy
 // scroll-jack section with an unusual layout (h-[250vh] on desktop), so it's
@@ -199,9 +207,11 @@ function Home() {
 
       {/* ── MARQUEE ── */}
       <div className="mt-10 sm:mt-14">
-        <Marquee
-          items={["Tree Removal", "Crown Pruning", "Stump Grinding", "24/7 Storm Response"]}
-        />
+        <Suspense fallback={null}>
+          <Marquee
+            items={["Tree Removal", "Crown Pruning", "Stump Grinding", "24/7 Storm Response"]}
+          />
+        </Suspense>
       </div>
 
       {/* ── STATS ROW ── */}
@@ -221,7 +231,9 @@ function Home() {
                 className="hover-lift rounded-[2rem] border border-border bg-card p-7"
               >
                 <p className="font-display text-4xl font-bold text-primary">
-                  <Counter value={s.value} />
+                  <Suspense fallback={s.value}>
+                    <Counter value={s.value} />
+                  </Suspense>
                 </p>
                 <p className="mt-2 text-sm text-muted-foreground">{s.label}</p>
               </Reveal>
