@@ -102,21 +102,23 @@ export function FallingLeavesBackground() {
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
 
-    // Roof query cache
-    let cachedRoofs: { element: HTMLElement; rect: DOMRect }[] = [];
+    // Roof query cache — refreshed periodically (not read fresh per-frame),
+    // and looked up by element below instead of calling getBoundingClientRect
+    // directly per resting leaf per frame, which forced a reflow every frame.
+    let cachedRoofs: Map<HTMLElement, DOMRect> = new Map();
     const updateRoofsCache = () => {
       const roofElements = document.querySelectorAll<HTMLElement>(
         '[data-leaf-roof="true"], .hover-lift, article'
       );
-      const list: { element: HTMLElement; rect: DOMRect }[] = [];
+      const map = new Map<HTMLElement, DOMRect>();
       roofElements.forEach((el) => {
         const r = el.getBoundingClientRect();
         // Only consider roofs visible on screen or near viewport
         if (r.bottom > -50 && r.top < height + 50 && r.width > 0) {
-          list.push({ element: el, rect: r });
+          map.set(el, r);
         }
       });
-      cachedRoofs = list;
+      cachedRoofs = map;
     };
 
     updateRoofsCache();
@@ -168,29 +170,39 @@ export function FallingLeavesBackground() {
         const prevY = leaf.y;
 
         if (leaf.state === "resting" && leaf.targetElement) {
-          // Leaf is sitting on top of a card roof
-          const rect = leaf.targetElement.getBoundingClientRect();
-          const currentRoofY = rect.top;
-          const currentRoofX = rect.left + rect.width * leaf.restXOffsetPercent;
+          // Leaf is sitting on top of a card roof — read its rect from the
+          // periodically-refreshed cache rather than the DOM directly.
+          const rect = cachedRoofs.get(leaf.targetElement);
 
-          // Check if leaf should blow off (user scrolled fast, or timer expired, or card moved offscreen)
-          const windTriggered = Math.abs(scrollVelocity) > 2;
-          const timerExpired = leaf.landedTimer >= leaf.landDuration;
-          const offscreen = rect.bottom < -50 || rect.top > height + 50;
-
-          if (windTriggered || timerExpired || offscreen) {
-            // Blow off roof
+          if (!rect) {
+            // No longer tracked (cache refresh missed it, e.g. scrolled far off) — blow off
             leaf.state = "blowing";
-            const windDir = scrollVelocity !== 0 ? Math.sign(scrollVelocity) : (Math.random() > 0.5 ? 1 : -1);
-            leaf.vx = windDir * (Math.random() * 2 + 1.5);
-            leaf.vy = -Math.random() * 1 - 0.5; // initial upward flutter
+            leaf.vx = (Math.random() - 0.5) * 2;
+            leaf.vy = -Math.random() * 1 - 0.5;
             leaf.targetElement = null;
           } else {
-            // Keep leaf locked to roof line
-            leaf.y = currentRoofY - leaf.size * 0.35;
-            leaf.x = currentRoofX;
-            leaf.rotation = Math.sin(frameCount * 0.06 + leaf.swayPhase) * 0.18;
-            leaf.landedTimer++;
+            const currentRoofY = rect.top;
+            const currentRoofX = rect.left + rect.width * leaf.restXOffsetPercent;
+
+            // Check if leaf should blow off (user scrolled fast, or timer expired, or card moved offscreen)
+            const windTriggered = Math.abs(scrollVelocity) > 2;
+            const timerExpired = leaf.landedTimer >= leaf.landDuration;
+            const offscreen = rect.bottom < -50 || rect.top > height + 50;
+
+            if (windTriggered || timerExpired || offscreen) {
+              // Blow off roof
+              leaf.state = "blowing";
+              const windDir = scrollVelocity !== 0 ? Math.sign(scrollVelocity) : (Math.random() > 0.5 ? 1 : -1);
+              leaf.vx = windDir * (Math.random() * 2 + 1.5);
+              leaf.vy = -Math.random() * 1 - 0.5; // initial upward flutter
+              leaf.targetElement = null;
+            } else {
+              // Keep leaf locked to roof line
+              leaf.y = currentRoofY - leaf.size * 0.35;
+              leaf.x = currentRoofX;
+              leaf.rotation = Math.sin(frameCount * 0.06 + leaf.swayPhase) * 0.18;
+              leaf.landedTimer++;
+            }
           }
         } else {
           // Leaf is falling or blowing
@@ -211,8 +223,7 @@ export function FallingLeavesBackground() {
 
           // Collision Detection for landing-capable leaves
           if (leaf.isLandingCapable && leaf.vy > 0) {
-            for (let i = 0; i < cachedRoofs.length; i++) {
-              const { element, rect } = cachedRoofs[i];
+            for (const [element, rect] of cachedRoofs) {
               const roofTop = rect.top;
               const leafBottom = leaf.y + leaf.size * 0.4;
               const prevLeafBottom = prevY + leaf.size * 0.4;

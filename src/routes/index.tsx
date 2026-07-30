@@ -8,17 +8,27 @@ import { Counter } from "@/components/site/Counter";
 import { Marquee } from "@/components/site/Marquee";
 import { SERVICES } from "@/lib/services";
 import { SITE } from "@/lib/site";
+import { useDelayedMount } from "@/lib/useDelayedMount";
 const hero = "https://res.cloudinary.com/vbblslix/image/upload/v1785426714/hero-canopy_wnewi5-ezgif.com-optiwebp_sk08zp.webp";
-import { BattalionParallaxImage } from "@/components/battalion/BattalionParallaxImage";
 import { CoLabsInvertedCorner } from "@/components/colabs/CoLabsInvertedCorner";
 import { CoLabsPill } from "@/components/colabs/CoLabsPill";
 import { CoLabsButton } from "@/components/colabs/CoLabsButton";
 
-// Lazy-loaded: below-the-fold, framer-motion-heavy scroll-jack section —
-// keeping it out of the critical home-page bundle shrinks what must
-// download before first paint on slow connections.
+// Lazy-loaded and time-delayed: below-the-fold, framer-motion-heavy
+// scroll-jack section with an unusual layout (h-[250vh] on desktop), so it's
+// gated by a delay rather than IntersectionObserver visibility — a
+// placeholder guessing its real height would risk a layout-shift pop-in.
+// The delay keeps its chunk (and framer-motion) out of the initial-load
+// critical window without needing to guess that height.
 const BattalionScrollCards = lazy(() =>
   import("@/components/battalion/BattalionScrollCards").then((m) => ({ default: m.BattalionScrollCards })),
+);
+// Lazy-loaded: framer-motion-dependent (parallax scroll effect). Combined
+// with the LazyMount visibility-gate around its usage below, this defers
+// both the chunk fetch (a static import wouldn't) and the mount (which is
+// what actually triggers framer-motion's reflow-causing measurement).
+const BattalionParallaxImage = lazy(() =>
+  import("@/components/battalion/BattalionParallaxImage").then((m) => ({ default: m.BattalionParallaxImage })),
 );
 
 export const Route = createFileRoute("/")({
@@ -51,6 +61,8 @@ const stats = [
 ];
 
 function Home() {
+  const showScrollCards = useDelayedMount(2000);
+
   return (
     <SiteLayout>
 
@@ -207,9 +219,11 @@ function Home() {
       </section>
 
       {/* ── HORIZONTAL SCROLL FEATURES ── */}
-      <Suspense fallback={null}>
-        <BattalionScrollCards />
-      </Suspense>
+      {showScrollCards && (
+        <Suspense fallback={null}>
+          <BattalionScrollCards />
+        </Suspense>
+      )}
 
       {/* ── SERVICES BENTO ── */}
       <section className="px-4 py-16 sm:py-24">
@@ -235,13 +249,15 @@ function Home() {
               >
                 <CoLabsInvertedCorner position="bottom-right" fill="currentColor" className="opacity-15" />
                 <LazyMount className="h-64 w-full">
-                  <BattalionParallaxImage
-                    src={s.image}
-                    alt={s.alt}
-                    width={900}
-                    height={900}
-                    className="h-full w-full"
-                  />
+                  <Suspense fallback={null}>
+                    <BattalionParallaxImage
+                      src={s.image}
+                      alt={s.alt}
+                      width={900}
+                      height={900}
+                      className="h-full w-full"
+                    />
+                  </Suspense>
                 </LazyMount>
                 <div className="p-7">
                   <h3 className="font-display text-2xl font-bold">{s.title}</h3>

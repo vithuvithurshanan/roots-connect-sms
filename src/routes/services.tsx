@@ -1,11 +1,19 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { lazy, Suspense } from "react";
 import { ArrowRight, Check, Phone } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Reveal } from "@/components/site/Reveal";
 import { LazyMount } from "@/components/site/LazyMount";
-import { BattalionParallaxImage } from "@/components/battalion/BattalionParallaxImage";
 import { SERVICES } from "@/lib/services";
 import { SITE } from "@/lib/site";
+
+// Lazy-loaded: framer-motion-dependent (parallax scroll effect). Combined
+// with the LazyMount visibility-gate around its usage below, this defers
+// both the chunk fetch and the mount (which is what triggers framer-motion's
+// reflow-causing measurement).
+const BattalionParallaxImage = lazy(() =>
+  import("@/components/battalion/BattalionParallaxImage").then((m) => ({ default: m.BattalionParallaxImage })),
+);
 
 export const Route = createFileRoute("/services")({
   component: Services,
@@ -93,13 +101,15 @@ function Services() {
                 {/* Image — alternates sides */}
                 <div className={i % 2 === 1 ? "md:order-2" : ""}>
                   <LazyMount className="h-64 w-full md:h-full">
-                    <BattalionParallaxImage
-                      src={s.image}
-                      alt={s.alt}
-                      width={900}
-                      height={900}
-                      className="h-full w-full"
-                    />
+                    <Suspense fallback={null}>
+                      <BattalionParallaxImage
+                        src={s.image}
+                        alt={s.alt}
+                        width={900}
+                        height={900}
+                        className="h-full w-full"
+                      />
+                    </Suspense>
                   </LazyMount>
                 </div>
 

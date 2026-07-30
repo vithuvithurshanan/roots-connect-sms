@@ -11,7 +11,7 @@ const HERO_IMAGE_URL =
 // home route needs immediately — modulepreloading them lets the browser fetch
 // them in parallel with the entry script instead of waiting for it to run and
 // discover the dynamic imports (which chains the requests one after another).
-const EAGER_CHUNK_NAMES = new Set(["SiteLayout", "routes", "clock", "BattalionParallaxImage"]);
+const EAGER_CHUNK_NAMES = new Set(["SiteLayout", "routes", "clock"]);
 
 // Preloads the LCP hero image (otherwise only discoverable after the JS bundle
 // parses/runs in this CSR build) and unblocks the stylesheet from initial render.
