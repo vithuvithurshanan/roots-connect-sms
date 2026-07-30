@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 type RevealProps = React.HTMLAttributes<HTMLElement> & {
@@ -8,6 +8,13 @@ type RevealProps = React.HTMLAttributes<HTMLElement> & {
   /** direction of entrance */
   from?: "up" | "down" | "left" | "right" | "zoom";
   as?: "div" | "span" | "section" | "article" | "li";
+  /**
+   * Set on instances known to sit in the initial viewport (e.g. hero-section
+   * cards). Skips the IntersectionObserver/animation entirely and renders
+   * already-shown from the first paint — no DOM geometry read, so no forced
+   * reflow, and no delay for whatever ends up being the LCP element.
+   */
+  immediate?: boolean;
 };
 
 const hiddenMap: Record<NonNullable<RevealProps["from"]>, string> = {
@@ -24,25 +31,17 @@ export function Reveal({
   delay = 0,
   from = "up",
   as: Tag = "div",
+  immediate = false,
   ...props
 }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [shown, setShown] = useState(false);
+  const [shown, setShown] = useState(immediate);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    if (immediate) return;
     const el = ref.current;
     if (!el) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setShown(true);
-      return;
-    }
-    // Content already inside the initial viewport should render immediately —
-    // animating it in on load (rather than on scroll) just delays paint for no
-    // visual benefit, and can hold up LCP if this happens to be the LCP element.
-    // useLayoutEffect (vs useEffect) applies this before the browser's first
-    // paint, so there's no flash of the hidden state either.
-    const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight && rect.bottom > 0) {
       setShown(true);
       return;
     }
@@ -59,7 +58,7 @@ export function Reveal({
     );
     io.observe(el);
     return () => io.disconnect();
-  }, []);
+  }, [immediate]);
 
   return (
     <Tag

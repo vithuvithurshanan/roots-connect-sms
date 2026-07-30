@@ -1,17 +1,25 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { lazy, Suspense } from "react";
 import { ArrowRight, Leaf, Phone, ShieldCheck, Clock, Star, TreePine, Zap } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Reveal } from "@/components/site/Reveal";
+import { LazyMount } from "@/components/site/LazyMount";
 import { Counter } from "@/components/site/Counter";
 import { Marquee } from "@/components/site/Marquee";
 import { SERVICES } from "@/lib/services";
 import { SITE } from "@/lib/site";
 const hero = "https://res.cloudinary.com/vbblslix/image/upload/v1785426714/hero-canopy_wnewi5-ezgif.com-optiwebp_sk08zp.webp";
 import { BattalionParallaxImage } from "@/components/battalion/BattalionParallaxImage";
-import { BattalionScrollCards } from "@/components/battalion/BattalionScrollCards";
 import { CoLabsInvertedCorner } from "@/components/colabs/CoLabsInvertedCorner";
 import { CoLabsPill } from "@/components/colabs/CoLabsPill";
 import { CoLabsButton } from "@/components/colabs/CoLabsButton";
+
+// Lazy-loaded: below-the-fold, framer-motion-heavy scroll-jack section —
+// keeping it out of the critical home-page bundle shrinks what must
+// download before first paint on slow connections.
+const BattalionScrollCards = lazy(() =>
+  import("@/components/battalion/BattalionScrollCards").then((m) => ({ default: m.BattalionScrollCards })),
+);
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -93,8 +101,8 @@ function Home() {
 
           {/* Top-right — free estimate card */}
           <Reveal
+            immediate
             from="right"
-            delay={100}
             data-leaf-roof="true"
             className="group relative flex flex-col justify-between rounded-[2.5rem] bg-lime p-7 text-lime-foreground overflow-hidden"
           >
@@ -116,7 +124,7 @@ function Home() {
           <div className="grid grid-cols-2 gap-3">
             {/* stat */}
             <Reveal
-              delay={160}
+              immediate
               data-leaf-roof="true"
               className="relative overflow-hidden flex flex-col justify-between rounded-[2rem] bg-primary p-6 text-primary-foreground"
             >
@@ -130,7 +138,7 @@ function Home() {
 
             {/* storm card */}
             <Reveal
-              delay={220}
+              immediate
               data-leaf-roof="true"
               className="relative overflow-hidden flex flex-col justify-between rounded-[2rem] bg-bark p-6 text-bark-foreground"
             >
@@ -144,7 +152,7 @@ function Home() {
 
             {/* where we work — spans 2 cols */}
             <Reveal
-              delay={280}
+              immediate
               data-leaf-roof="true"
               className="relative overflow-hidden col-span-2 rounded-[2rem] bg-sand p-6 text-sand-foreground"
             >
@@ -199,7 +207,9 @@ function Home() {
       </section>
 
       {/* ── HORIZONTAL SCROLL FEATURES ── */}
-      <BattalionScrollCards />
+      <Suspense fallback={null}>
+        <BattalionScrollCards />
+      </Suspense>
 
       {/* ── SERVICES BENTO ── */}
       <section className="px-4 py-16 sm:py-24">
@@ -224,13 +234,15 @@ function Home() {
                 className="hover-lift group relative overflow-hidden rounded-[2.5rem] border border-border bg-card"
               >
                 <CoLabsInvertedCorner position="bottom-right" fill="currentColor" className="opacity-15" />
-                <BattalionParallaxImage
-                  src={s.image}
-                  alt={s.alt}
-                  width={900}
-                  height={900}
-                  className="h-64 w-full"
-                />
+                <LazyMount className="h-64 w-full">
+                  <BattalionParallaxImage
+                    src={s.image}
+                    alt={s.alt}
+                    width={900}
+                    height={900}
+                    className="h-full w-full"
+                  />
+                </LazyMount>
                 <div className="p-7">
                   <h3 className="font-display text-2xl font-bold">{s.title}</h3>
                   <p className="mt-3 text-sm text-muted-foreground">{s.blurb}</p>

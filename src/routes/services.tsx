@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Check, Phone } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Reveal } from "@/components/site/Reveal";
+import { LazyMount } from "@/components/site/LazyMount";
 import { BattalionParallaxImage } from "@/components/battalion/BattalionParallaxImage";
 import { SERVICES } from "@/lib/services";
 import { SITE } from "@/lib/site";
@@ -91,13 +92,15 @@ function Services() {
               >
                 {/* Image — alternates sides */}
                 <div className={i % 2 === 1 ? "md:order-2" : ""}>
-                  <BattalionParallaxImage
-                    src={s.image}
-                    alt={s.alt}
-                    width={900}
-                    height={900}
-                    className="h-64 w-full md:h-full"
-                  />
+                  <LazyMount className="h-64 w-full md:h-full">
+                    <BattalionParallaxImage
+                      src={s.image}
+                      alt={s.alt}
+                      width={900}
+                      height={900}
+                      className="h-full w-full"
+                    />
+                  </LazyMount>
                 </div>
 
                 {/* Content */}
