@@ -50,6 +50,8 @@ export function Header() {
           <img
             src="https://res.cloudinary.com/vbblslix/image/upload/f_auto,q_auto,w_144,h_144,c_fit/v1785338839/Create_creativity_logo_Woodcrest_202607291021-Photoroom_pkovw9.png"
             alt="Woodcrest Tree Buffalo"
+            width={144}
+            height={144}
             className="h-10 w-auto sm:h-12"
           />
         </Link>

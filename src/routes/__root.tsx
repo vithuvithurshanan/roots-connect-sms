@@ -11,7 +11,6 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { initAnalytics } from "../lib/firebase";
 
 function NotFoundComponent() {
   return (
@@ -184,14 +183,25 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   useEffect(() => {
-    // Deferred so analytics' network round-trips don't compete with
-    // critical-path resources for bandwidth during initial page load.
-    const schedule =
-      window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 2000));
-    const handle = schedule(() => initAnalytics());
+    // Deferred past `load` (with a buffer) so analytics' network round-trips
+    // land well outside the initial-navigation critical path — requestIdleCallback
+    // alone can still fire early on a page this light.
+    let timeoutId: number | undefined;
+    const runAnalytics = () => {
+      // Dynamic import: keeps Firebase's app/analytics code out of the
+      // initial bundle since it's unused until this deferred call anyway.
+      timeoutId = window.setTimeout(() => {
+        import("../lib/firebase").then(({ initAnalytics }) => initAnalytics());
+      }, 3000);
+    };
+    if (document.readyState === "complete") {
+      runAnalytics();
+      return;
+    }
+    window.addEventListener("load", runAnalytics, { once: true });
     return () => {
-      if (window.cancelIdleCallback) window.cancelIdleCallback(handle as number);
-      else window.clearTimeout(handle as number);
+      window.removeEventListener("load", runAnalytics);
+      if (timeoutId) window.clearTimeout(timeoutId);
     };
   }, []);
 

@@ -17,6 +17,8 @@ export function Footer() {
             <img
               src="https://res.cloudinary.com/vbblslix/image/upload/f_auto,q_auto,w_144,h_144,c_fit/v1785338839/Create_creativity_logo_Woodcrest_202607291021-Photoroom_pkovw9.png"
               alt="Woodcrest Tree Buffalo"
+              width={144}
+              height={144}
               className="h-12 w-auto brightness-0 invert"
             />
             <p className="mt-4 max-w-sm text-sm opacity-80">
