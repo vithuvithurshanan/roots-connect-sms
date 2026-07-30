@@ -48,7 +48,7 @@ export function Header() {
         {/* Logo */}
         <Link to="/" className="shrink-0">
           <img
-            src="https://res.cloudinary.com/vbblslix/image/upload/f_auto,q_auto,w_144,h_144,c_fit/v1785338839/Create_creativity_logo_Woodcrest_202607291021-Photoroom_pkovw9.png"
+            src="https://res.cloudinary.com/vbblslix/image/upload/f_auto,q_auto,w_144,h_144,c_fit/v1785427012/Create_creativity_logo_Woodcrest_202607291021-Photoroom_pkovw9-ezgif.com-optiwebp_1_hg6exc.webp"
             alt="Woodcrest Tree Buffalo"
             width={144}
             height={144}

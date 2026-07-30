@@ -5,7 +5,7 @@ import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 const HERO_IMAGE_URL =
-  "https://res.cloudinary.com/vbblslix/image/upload/f_auto,q_auto/v1785340402/hero-canopy_wnewi5.jpg";
+  "https://res.cloudinary.com/vbblslix/image/upload/v1785426714/hero-canopy_wnewi5-ezgif.com-optiwebp_sk08zp.webp";
 
 // Chunks every route needs right away (layout shell + router data) or that the
 // home route needs immediately — modulepreloading them lets the browser fetch

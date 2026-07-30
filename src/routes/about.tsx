@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { SITE } from "@/lib/site";
-const hero = "https://res.cloudinary.com/vbblslix/image/upload/f_auto,q_auto/v1785340402/hero-canopy_wnewi5.jpg";
+const hero = "https://res.cloudinary.com/vbblslix/image/upload/v1785426714/hero-canopy_wnewi5-ezgif.com-optiwebp_sk08zp.webphttps://res.cloudinary.com/vbblslix/image/upload/v1785426714/hero-canopy_wnewi5-ezgif.com-optiwebp_sk08zp.webp";
 
 export const Route = createFileRoute("/about")({
   component: About,
@@ -19,9 +19,9 @@ export const Route = createFileRoute("/about")({
         property: "og:description",
         content: "Local, licensed and insured Buffalo arborists caring for WNY trees year round.",
       },
-      { property: "og:url", content: "/about" },
+      { property: "og:url", content: "https://woodcrest-tree-buffalo-ny.web.app/about" },
     ],
-    links: [{ rel: "canonical", href: "/about" }],
+    links: [{ rel: "canonical", href: "https://woodcrest-tree-buffalo-ny.web.app/about" }],
   }),
 });
 

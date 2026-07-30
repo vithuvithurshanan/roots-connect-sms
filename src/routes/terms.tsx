@@ -17,9 +17,9 @@ export const Route = createFileRoute("/terms")({
         property: "og:description",
         content: "Website and service terms, including SMS program terms, for Woodcrest Tree Buffalo.",
       },
-      { property: "og:url", content: "/terms" },
+      { property: "og:url", content: "https://woodcrest-tree-buffalo-ny.web.app/terms" },
     ],
-    links: [{ rel: "canonical", href: "/terms" }],
+    links: [{ rel: "canonical", href: "https://woodcrest-tree-buffalo-ny.web.app/terms" }],
   }),
 });
 

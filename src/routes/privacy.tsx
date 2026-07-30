@@ -17,9 +17,9 @@ export const Route = createFileRoute("/privacy")({
         property: "og:description",
         content: "Privacy practices and SMS consent policy for Woodcrest Tree Buffalo.",
       },
-      { property: "og:url", content: "/privacy" },
+      { property: "og:url", content: "https://woodcrest-tree-buffalo-ny.web.app/privacy" },
     ],
-    links: [{ rel: "canonical", href: "/privacy" }],
+    links: [{ rel: "canonical", href: "https://woodcrest-tree-buffalo-ny.web.app/privacy" }],
   }),
 });
 

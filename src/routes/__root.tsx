@@ -99,8 +99,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Sans:wght@400;500;600&display=swap",
       },
-      { rel: "icon", href: "https://res.cloudinary.com/vbblslix/image/upload/q_auto,w_180,h_180,c_fit/v1785338839/Create_creativity_logo_Woodcrest_202607291021-Photoroom_pkovw9.png", type: "image/png" },
-      { rel: "apple-touch-icon", href: "https://res.cloudinary.com/vbblslix/image/upload/q_auto,w_180,h_180,c_fit/v1785338839/Create_creativity_logo_Woodcrest_202607291021-Photoroom_pkovw9.png" },
+      { rel: "icon", href: "https://res.cloudinary.com/vbblslix/image/upload/f_png,q_auto,w_180,h_180,c_fit/v1785427012/Create_creativity_logo_Woodcrest_202607291021-Photoroom_pkovw9-ezgif.com-optiwebp_1_hg6exc.webp", type: "image/png" },
+      { rel: "apple-touch-icon", href: "https://res.cloudinary.com/vbblslix/image/upload/f_png,q_auto,w_180,h_180,c_fit/v1785427012/Create_creativity_logo_Woodcrest_202607291021-Photoroom_pkovw9-ezgif.com-optiwebp_1_hg6exc.webp" },
     ],
     scripts: [
       {
@@ -109,10 +109,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@context": "https://schema.org",
           "@type": "LocalBusiness",
           name: "Woodcrest Tree Buffalo",
-          url: "https://woodcrest-tree-buffalo.web.app",
+          url: "https://woodcrest-tree-buffalo-ny.web.app",
           telephone: "716-333-8772",
           email: "info@woodcresttreebuffalo.com",
-          image: "https://res.cloudinary.com/vbblslix/image/upload/v1785338839/Create_creativity_logo_Woodcrest_202607291021-Photoroom_pkovw9.png",
+          image: "https://res.cloudinary.com/vbblslix/image/upload/v1785427012/Create_creativity_logo_Woodcrest_202607291021-Photoroom_pkovw9-ezgif.com-optiwebp_1_hg6exc.webp",
           priceRange: "$$",
           address: {
             "@type": "PostalAddress",

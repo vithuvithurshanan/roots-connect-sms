@@ -6,7 +6,7 @@ import { Counter } from "@/components/site/Counter";
 import { Marquee } from "@/components/site/Marquee";
 import { SERVICES } from "@/lib/services";
 import { SITE } from "@/lib/site";
-const hero = "https://res.cloudinary.com/vbblslix/image/upload/f_auto,q_auto/v1785340402/hero-canopy_wnewi5.jpg";
+const hero = "https://res.cloudinary.com/vbblslix/image/upload/v1785426714/hero-canopy_wnewi5-ezgif.com-optiwebp_sk08zp.webp";
 import { BattalionParallaxImage } from "@/components/battalion/BattalionParallaxImage";
 import { BattalionScrollCards } from "@/components/battalion/BattalionScrollCards";
 import { CoLabsInvertedCorner } from "@/components/colabs/CoLabsInvertedCorner";
@@ -29,9 +29,9 @@ export const Route = createFileRoute("/")({
         content:
           "Licensed and insured Buffalo arborists. Tree removal, trimming, stump grinding and emergency storm response.",
       },
-      { property: "og:url", content: "/" },
+      { property: "og:url", content: "https://woodcrest-tree-buffalo-ny.web.app/" },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: "https://woodcrest-tree-buffalo-ny.web.app/" }],
   }),
 });
 

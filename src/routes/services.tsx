@@ -22,9 +22,9 @@ export const Route = createFileRoute("/services")({
         content:
           "Removal, pruning, stump grinding and 24/7 storm response from Buffalo's careful tree crew.",
       },
-      { property: "og:url", content: "/services" },
+      { property: "og:url", content: "https://woodcrest-tree-buffalo-ny.web.app/services" },
     ],
-    links: [{ rel: "canonical", href: "/services" }],
+    links: [{ rel: "canonical", href: "https://woodcrest-tree-buffalo-ny.web.app/services" }],
   }),
 });
 

@@ -19,9 +19,9 @@ export const Route = createFileRoute("/contact")({
         property: "og:description",
         content: "Free tree service estimates in Buffalo, NY. Call 716-333-8772.",
       },
-      { property: "og:url", content: "/contact" },
+      { property: "og:url", content: "https://woodcrest-tree-buffalo-ny.web.app/contact" },
     ],
-    links: [{ rel: "canonical", href: "/contact" }],
+    links: [{ rel: "canonical", href: "https://woodcrest-tree-buffalo-ny.web.app/contact" }],
   }),
 });
 
