@@ -158,8 +158,11 @@ export function FallingLeavesBackground() {
       frameCount++;
       ctx.clearRect(0, 0, width, height);
 
-      // Periodically refresh roof rect positions for accuracy
-      if (frameCount % 15 === 0) {
+      // Periodically refresh roof rect positions for accuracy.
+      // Every 90 frames (~1.5 s at 60 fps) is plenty — the cards don't
+      // move continuously, so a high-frequency refresh only wastes budget
+      // by forcing repeated getBoundingClientRect reflows.
+      if (frameCount % 90 === 0) {
         updateRoofsCache();
       }
 
@@ -268,12 +271,24 @@ export function FallingLeavesBackground() {
       animationFrameId = requestAnimationFrame(render);
     };
 
+    // Pause the animation loop while the tab is hidden to avoid
+    // burning CPU/GPU for invisible canvas work.
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        cancelAnimationFrame(animationFrameId);
+      } else {
+        render();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
     render();
 
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
 

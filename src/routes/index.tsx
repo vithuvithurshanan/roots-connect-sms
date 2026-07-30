@@ -49,7 +49,19 @@ export const Route = createFileRoute("/")({
       },
       { property: "og:url", content: "https://woodcrest-tree-buffalo-ny.web.app/" },
     ],
-    links: [{ rel: "canonical", href: "https://woodcrest-tree-buffalo-ny.web.app/" }],
+    links: [
+      { rel: "canonical", href: "https://woodcrest-tree-buffalo-ny.web.app/" },
+      // Preload the LCP hero image so the browser discovers and fetches it
+      // as early as possible — eliminating the 710 ms resource load delay
+      // caused by the browser not knowing about the image until it parses
+      // the component JS.
+      {
+        rel: "preload",
+        as: "image",
+        href: hero,
+        fetchpriority: "high",
+      },
+    ],
   }),
 });
 

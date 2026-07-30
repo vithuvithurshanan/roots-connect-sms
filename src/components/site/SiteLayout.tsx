@@ -19,14 +19,23 @@ const BattalionBottomTicker = lazy(() =>
 );
 
 export function SiteLayout({ children }: { children: ReactNode }) {
+  // Delay decorative overlays so they don't compete with the LCP image and
+  // critical JS during the first paint window. The leaves rAF loop is the
+  // heaviest piece: deferring its mount keeps the main thread clear while
+  // the hero image loads and the first contentful paint settles.
+  const showLeaves = useDelayedMount(1500);
   const showTicker = useDelayedMount(2000);
 
   return (
     <div className="min-h-screen bg-background">
       <Suspense fallback={null}>
         <Preloader />
-        <FallingLeavesBackground />
       </Suspense>
+      {showLeaves && (
+        <Suspense fallback={null}>
+          <FallingLeavesBackground />
+        </Suspense>
+      )}
       <Header />
       <main className="page-in">{children}</main>
 
