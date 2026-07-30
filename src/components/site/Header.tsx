@@ -63,8 +63,9 @@ export function Header() {
               <div key={item.to} className="group relative">
                 <Link
                   to={item.to}
+                  activeProps={{ className: "text-foreground font-semibold border-t-[#0c140d] border-b-[#0c140d]" }}
                   className={[
-                    "inline-flex items-center gap-1 rounded-full px-4 py-2 text-sm font-medium transition-colors",
+                    "inline-flex items-center gap-1 rounded-full border-t-2 border-b-2 border-transparent px-4 py-2 text-sm font-medium transition-colors",
                     "text-foreground/75 hover:text-foreground hover:bg-secondary",
                   ].join(" ")}
                 >
@@ -91,8 +92,8 @@ export function Header() {
                 key={item.to}
                 to={item.to}
                 activeOptions={{ exact: item.to === "/" }}
-                activeProps={{ className: "text-foreground font-semibold" }}
-                className="rounded-full px-4 py-2 text-sm font-medium transition-colors text-foreground/75 hover:text-foreground hover:bg-secondary"
+                activeProps={{ className: "text-foreground font-semibold border-t-[#0c140d] border-b-[#0c140d]" }}
+                className="rounded-full border-t-2 border-b-2 border-transparent px-4 py-2 text-sm font-medium transition-colors text-foreground/75 hover:text-foreground hover:bg-secondary"
               >
                 {item.label}
               </Link>
