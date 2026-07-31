@@ -1,9 +1,10 @@
 import { Link } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ChevronDown, Menu, Phone, X } from "lucide-react";
 import { SITE } from "@/lib/site";
 import { SERVICES } from "@/lib/services";
 import { CoLabsInvertedCorner } from "@/components/colabs/CoLabsInvertedCorner";
+import { useScrollY } from "@/lib/useScrollY";
 
 const nav = [
   { to: "/", label: "Home" },
@@ -14,18 +15,16 @@ const nav = [
 
 export function Header() {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
-
-  useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 20);
-      const docH = document.documentElement.scrollHeight - window.innerHeight;
-      setScrollProgress(docH > 0 ? (window.scrollY / docH) * 100 : 0);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  const scrollY = useScrollY();
+  const scrolled = scrollY > 20;
+  // scrollHeight is only available on the client — this is fine because
+  // scrollY starts at 0 and docH is only needed once the user scrolls,
+  // which can only happen after hydration. No SSR/client mismatch.
+  const docH =
+    typeof document !== "undefined"
+      ? document.documentElement.scrollHeight - window.innerHeight
+      : 1;
+  const scrollProgress = scrollY > 0 ? (scrollY / docH) * 100 : 0;
 
   return (
     <header
@@ -46,7 +45,7 @@ export function Header() {
       <div className="mx-auto flex max-w-screen-xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
 
         {/* Logo */}
-        <Link to="/" className="shrink-0">
+        <Link to="/" className="shrink-0" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
           <img
             src="https://res.cloudinary.com/vbblslix/image/upload/f_auto,q_auto,w_144,h_144,c_fit/v1785427012/Create_creativity_logo_Woodcrest_202607291021-Photoroom_pkovw9-ezgif.com-optiwebp_1_hg6exc.webp"
             alt="Woodcrest Tree Buffalo"

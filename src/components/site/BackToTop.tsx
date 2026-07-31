@@ -1,25 +1,17 @@
-import { useEffect, useState } from "react";
 import { ArrowUp } from "lucide-react";
+import { useScrollY } from "@/lib/useScrollY";
 
 const R = 49;
 const CIRC = 2 * Math.PI * R;
 
 /** Scroll-progress ring that scrolls back to top, like the Rovix template. */
 export function BackToTop() {
-  const [progress, setProgress] = useState(0);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      const p = max > 0 ? window.scrollY / max : 0;
-      setProgress(p);
-      setVisible(window.scrollY > 400);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  const scrollY = useScrollY();
+  const max = typeof document !== "undefined"
+    ? document.documentElement.scrollHeight - window.innerHeight
+    : 0;
+  const progress = max > 0 ? scrollY / max : 0;
+  const visible = scrollY > 400;
 
   return (
     <button

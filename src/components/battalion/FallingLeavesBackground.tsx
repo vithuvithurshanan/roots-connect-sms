@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { subscribeScroll } from "@/lib/scrollBus";
 
 interface LeafParticle {
   id: number;
@@ -83,8 +84,14 @@ export function FallingLeavesBackground() {
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
-    let prevScrollY = window.scrollY;
+    // Handle Scroll tracking for wind generation — uses the shared scroll
+    // bus so this doesn't add a second window scroll listener.
     let scrollVelocity = 0;
+    let prevScrollY = window.scrollY;
+    const unsubScroll = subscribeScroll((y) => {
+      scrollVelocity = y - prevScrollY;
+      prevScrollY = y;
+    });
 
     // Handle Resize
     const handleResize = () => {
@@ -93,14 +100,6 @@ export function FallingLeavesBackground() {
       height = canvas.height = window.innerHeight;
     };
     window.addEventListener("resize", handleResize, { passive: true });
-
-    // Handle Scroll tracking for wind generation
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      scrollVelocity = currentScrollY - prevScrollY;
-      prevScrollY = currentScrollY;
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
 
     // Roof query cache — refreshed periodically (not read fresh per-frame),
     // and looked up by element below instead of calling getBoundingClientRect
@@ -121,9 +120,12 @@ export function FallingLeavesBackground() {
       cachedRoofs = map;
     };
 
-    updateRoofsCache();
+    // Defer the very first cache population to a rAF so it runs after the
+    // browser has committed the current paint rather than forcing a
+    // synchronous layout read on mount (which Lighthouse flags as a
+    // forced reflow on the SiteLayout chunk).
+    requestAnimationFrame(updateRoofsCache);
 
-    // Generate Leaves Particle Array
     const TOTAL_LEAVES = 32;
     const leaves: LeafParticle[] = [];
 
@@ -286,8 +288,8 @@ export function FallingLeavesBackground() {
 
     return () => {
       cancelAnimationFrame(animationFrameId);
+      unsubScroll();
       window.removeEventListener("resize", handleResize);
-      window.removeEventListener("scroll", handleScroll);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
