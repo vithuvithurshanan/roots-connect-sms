@@ -11,7 +11,10 @@ const HERO_IMAGE_URL =
 // home route needs immediately — modulepreloading them lets the browser fetch
 // them in parallel with the entry script instead of waiting for it to run and
 // discover the dynamic imports (which chains the requests one after another).
-const EAGER_CHUNK_NAMES = new Set(["SiteLayout", "routes", "clock"]);
+// "icons" is the lucide-react bundle (arrow-right, zap, phone, tree-pine …
+// all used in the hero above the fold) — preloading it prevents the
+// index → icons waterfall that was adding ~60ms to the critical path.
+const EAGER_CHUNK_NAMES = new Set(["SiteLayout", "routes", "clock", "icons"]);
 
 // Preloads the LCP hero image (otherwise only discoverable after the JS bundle
 // parses/runs in this CSR build) and unblocks the stylesheet from initial render.
@@ -54,5 +57,19 @@ export default defineConfig({
   build: {
     outDir: "dist/spa",
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        // Vite/Rollup splits every lucide icon into its own tiny chunk by
+        // default. With several icons used in the hero (arrow-right, zap,
+        // phone, tree-pine …) this creates a chain of waterfall requests
+        // immediately after the entry bundle. Grouping them into a single
+        // "icons" chunk means one parallel fetch instead of N serial ones.
+        manualChunks(id) {
+          if (id.includes("lucide-react")) {
+            return "icons";
+          }
+        },
+      },
+    },
   },
 });
