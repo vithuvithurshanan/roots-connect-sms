@@ -4,6 +4,8 @@ import { SITE } from "@/lib/site";
 import { CoLabsInvertedCorner } from "@/components/colabs/CoLabsInvertedCorner";
 import { CoLabsPill } from "@/components/colabs/CoLabsPill";
 
+const scrollTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
 export function Footer() {
   return (
     <footer className="">
@@ -40,22 +42,22 @@ export function Footer() {
             </p>
             <ul className="space-y-2 opacity-90">
               <li>
-                <Link to="/" className="transition-opacity hover:opacity-70">Home</Link>
+                <Link to="/" onClick={scrollTop} className="transition-opacity hover:opacity-70">Home</Link>
               </li>
               <li>
-                <Link to="/services" className="transition-opacity hover:opacity-70">Services</Link>
+                <Link to="/services" onClick={scrollTop} className="transition-opacity hover:opacity-70">Services</Link>
               </li>
               <li>
-                <Link to="/about" className="transition-opacity hover:opacity-70">About</Link>
+                <Link to="/about" onClick={scrollTop} className="transition-opacity hover:opacity-70">About</Link>
               </li>
               <li>
-                <Link to="/contact" className="transition-opacity hover:opacity-70">Contact</Link>
+                <Link to="/contact" onClick={scrollTop} className="transition-opacity hover:opacity-70">Contact</Link>
               </li>
               <li>
-                <Link to="/terms" className="transition-opacity hover:opacity-70">Terms &amp; Conditions</Link>
+                <Link to="/terms" onClick={scrollTop} className="transition-opacity hover:opacity-70">Terms &amp; Conditions</Link>
               </li>
               <li>
-                <Link to="/privacy" className="transition-opacity hover:opacity-70">Privacy Policy</Link>
+                <Link to="/privacy" onClick={scrollTop} className="transition-opacity hover:opacity-70">Privacy Policy</Link>
               </li>
             </ul>
           </div>

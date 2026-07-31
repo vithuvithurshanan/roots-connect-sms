@@ -13,6 +13,8 @@ const nav = [
   { to: "/contact", label: "Contact" },
 ];
 
+const scrollTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
 export function Header() {
   const [open, setOpen] = useState(false);
   const scrollY = useScrollY();
@@ -45,7 +47,7 @@ export function Header() {
       <div className="mx-auto flex max-w-screen-xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
 
         {/* Logo */}
-        <Link to="/" className="shrink-0" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+        <Link to="/" className="shrink-0" onClick={scrollTop}>
           <img
             src="https://res.cloudinary.com/vbblslix/image/upload/f_auto,q_auto,w_144,h_144,c_fit/v1785427012/Create_creativity_logo_Woodcrest_202607291021-Photoroom_pkovw9-ezgif.com-optiwebp_1_hg6exc.webp"
             alt="Woodcrest Tree Buffalo"
@@ -63,6 +65,7 @@ export function Header() {
                 <Link
                   to={item.to}
                   activeProps={{ className: "text-foreground font-semibold border-t-[#0c140d] border-b-[#0c140d]" }}
+                  onClick={scrollTop}
                   className={[
                     "inline-flex items-center gap-1 rounded-full border-t-2 border-b-2 border-transparent px-4 py-2 text-sm font-medium transition-colors",
                     "text-foreground/75 hover:text-foreground hover:bg-secondary",
@@ -92,6 +95,7 @@ export function Header() {
                 to={item.to}
                 activeOptions={{ exact: item.to === "/" }}
                 activeProps={{ className: "text-foreground font-semibold border-t-[#0c140d] border-b-[#0c140d]" }}
+                onClick={scrollTop}
                 className="rounded-full border-t-2 border-b-2 border-transparent px-4 py-2 text-sm font-medium transition-colors text-foreground/75 hover:text-foreground hover:bg-secondary"
               >
                 {item.label}
@@ -159,7 +163,7 @@ export function Header() {
             <Link
               key={item.to}
               to={item.to}
-              onClick={() => setOpen(false)}
+              onClick={() => { setOpen(false); scrollTop(); }}
               className="block rounded-2xl px-4 py-3 text-sm font-medium text-foreground/80 transition-colors hover:bg-secondary hover:text-foreground"
             >
               {item.label}
