@@ -65,6 +65,15 @@ export default defineConfig({
     tsconfigPaths(),
     perfHtmlPlugin(),
   ],
+  resolve: {
+    alias: {
+      // @tanstack/start-storage-context imports node:async_hooks
+      // (AsyncLocalStorage) which doesn't exist in browsers.  In the SPA
+      // build there is no SSR so this module is never actually called —
+      // replace it with an empty stub so the bundle stays browser-safe.
+      "@tanstack/start-storage-context": "/src/lib/empty-stub.ts",
+    },
+  },
   build: {
     outDir: "dist/spa",
     emptyOutDir: true,

@@ -4,10 +4,10 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "dev": "vite dev",
-    "build": "vite build",
-    "build:firebase": "npx vite build --config vite.spa.config.ts",
-    "build:dev": "vite build --mode development",
+    "dev": "node init && vite dev",
+    "build": "node init && vite build",
+    "build:firebase": "node init && npx vite build --config vite.spa.config.ts",
+    "build:dev": "node init && vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write ."
